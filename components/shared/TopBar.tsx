@@ -5,8 +5,10 @@ function TopBar() {
   return (
     <nav className="topbar">
       <Link href="/" className="flex gap-4 items-center">
-        <Image src="/assets/logo.png" alt="logo" width={40} height={40} />
-        <p className="text-light-1 max-xs:hidden text-heading3-bold">
+        <div className="radius-100%">
+          <Image src="/assets/logo.png" alt="logo" width={28} height={28} />
+        </div>
+        <p className="text-light-1 max-xs:hidden text-heading4-medium ">
           {"Co->Hort"}
         </p>
       </Link>
@@ -19,8 +21,8 @@ function TopBar() {
                 <Image
                   src="/assets/logout.svg"
                   alt="logout"
-                  width={28}
-                  height={28}
+                  width={20}
+                  height={20}
                 />
               </div>
             </SignOutButton>
