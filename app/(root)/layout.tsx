@@ -1,42 +1,42 @@
-import { ClerkProvider } from '@clerk/nextjs'
-import '../globals.css'
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import TopBar from '@/components/TopBar'
-import BottomBar from '@/components/BottomBar'
-import LeftBar from '@/components/LeftBar'
-import RightBar from '@/components/RightBar'
+import { ClerkProvider } from "@clerk/nextjs";
+import "../globals.css";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import TopBar from "@/components/shared/TopBar";
+import BottomBar from "@/components/shared/BottomBar";
+import LeftBar from "@/components/shared/LeftBar";
+import RightBar from "@/components/shared/RightBar";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Authorization",
-  description: "Build by Tanishka Yadav"
-}
+  title: "Co-hort",
+  description: "Build by Tanishka Yadav",
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <ClerkProvider>
-    <html lang="en">
-      <body className={inter.className}>
-        <TopBar/>
-        <main className='flex flex-row'>
-          <LeftBar/>
-          <section className='main-container'>
-            <div className='w-full max-w-4xl'>{children}</div>
-          </section>
-          <RightBar/>
-        </main>
+      <html lang="en">
+        <body className={inter.className}>
+          <TopBar />
+          <main className="flex flex-row">
+            <LeftBar />
+            <section className="main-container">
+              <div className="w-full max-w-4xl">{children}</div>
+            </section>
+            <RightBar />
+          </main>
 
-        <BottomBar/>
+          <BottomBar />
 
-
-        {children}</body>
-    </html>
+          {children}
+        </body>
+      </html>
     </ClerkProvider>
-  )
+  );
 }
