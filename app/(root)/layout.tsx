@@ -33,8 +33,6 @@ export default function RootLayout({
           </main>
 
           <BottomBar />
-
-          {children}
         </body>
       </html>
     </ClerkProvider>
