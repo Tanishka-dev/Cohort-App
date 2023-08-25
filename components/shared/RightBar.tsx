@@ -1,5 +1,5 @@
 function RightBar() {
-  return <div></div>;
+  return <section></section>;
 }
 
 export default RightBar;

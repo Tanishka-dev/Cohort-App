@@ -59,11 +59,11 @@
   }
 
   .topbar {
-    @apply backdrop-blur-sm fixed top-0 z-50 flex w-full px-6 py-3 bg-transparent items-center justify-between;
+    @apply backdrop-blur-sm fixed top-0 z-50 flex w-full px-6 py-3 items-center justify-between bg-glassmorphism;
   }
 
   .bottombar {
-    @apply fixed bottom-0 z-10 w-full rounded-t-3xl bg-glassmorphism p-4 backdrop-blur-lg xs:px-7 md:hidden;
+    @apply fixed bottom-0 z-10 w-full rounded-t-3xl bg-glassmorphism xs:px-7 md:hidden p-4 backdrop-blur-sm;
   }
 
   .bottombar_container {
@@ -75,7 +75,7 @@
   }
 
   .leftsidebar {
-    @apply sticky left-0 top-0 z-20 flex h-screen w-fit flex-col justify-between overflow-auto border-r border-r-dark-4 bg-[#0F172A] pb-5 pt-28 max-md:hidden;
+    @apply sticky left-0 top-0 z-20 flex h-screen w-fit flex-col justify-between overflow-auto border-r bg-glassmorphism p-4 backdrop-blur-sm border-r-dark-4 pb-5 pt-28 max-md:hidden;
   }
 
   .leftsidebar_link {
