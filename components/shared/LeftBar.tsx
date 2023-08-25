@@ -1,6 +1,7 @@
 "use client";
 
 import { sidebarLinks } from "@/constants";
+import { SignOutButton, SignedIn } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -9,7 +10,7 @@ function LeftBar() {
   const router = useRouter();
   return (
     <section className="leftsidebar custom-scrollbar">
-      <div className="flex flex-col w-full flex-1 gap-4 px-4">
+      <div className="flex flex-col w-full flex-1 gap-2 px-4">
         {sidebarLinks.map((link) => {
           const isActive =
             (pathname.includes(link.route) && link.route.length > 1) ||
@@ -23,7 +24,6 @@ function LeftBar() {
               <Image
                 src={link.imgURL}
                 alt={link.label}
-                className="hover:bg-primary-500 rounded-sm"
                 width={18}
                 height={18}
               />
@@ -37,6 +37,23 @@ function LeftBar() {
             </Link>
           );
         })}
+      </div>
+      <div className="mt-10 px-4">
+        <SignedIn>
+          <SignOutButton signOutCallback={() => router.push("/sign-in")}>
+            <div className="flex cursor-pointer p-4 gap-4 ">
+              <Image
+                src="/assets/logout.svg"
+                alt="logout"
+                width={18}
+                height={18}
+              />
+              <p className="max-lg:hidden text-[#c4c4c8] text-small-regular hover:text-[#38BDF8]">
+                Logout
+              </p>
+            </div>
+          </SignOutButton>
+        </SignedIn>
       </div>
     </section>
   );
