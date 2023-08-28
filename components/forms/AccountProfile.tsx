@@ -15,6 +15,9 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { UserVaildations } from "@/lib/validations/user";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Image from "next/image";
+import { ChangeEvent } from "react";
+import { Textarea } from "../ui/textarea";
 
 interface Props {
   user: {
@@ -42,22 +45,110 @@ const AccountProfile = ({ user, btnType }: Props) => {
   function onSubmit(values: z.infer<typeof UserVaildations>) {
     console.log(values);
   }
+  const handleChange = (
+    e: ChangeEvent,
+    fieldChange: (value: string) => void
+  ) => {
+    e.preventDefault();
+  };
+
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 ">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col justify-start gap-10 "
+      >
+        <FormField
+          control={form.control}
+          name="profile_photo"
+          render={({ field }) => (
+            <FormItem className="flex items-center gap-4">
+              <FormLabel className="account-form_image-label">
+                {field.value ? (
+                  <Image
+                    alt="profile photo"
+                    src={field.value}
+                    width={80}
+                    height={80}
+                    priority
+                    className="rounded-full object-contain"
+                  />
+                ) : (
+                  <Image
+                    alt="profile photo"
+                    src="/assets/profile.svg"
+                    width={20}
+                    height={20}
+                    className="object-contain"
+                  />
+                )}
+              </FormLabel>
+              <FormControl className="flex-1 text-base-semibold text-gray-200">
+                <Input
+                  placeholder="Upload Profile Photo"
+                  accept="image/*"
+                  type="file"
+                  className="account-form_image-input"
+                  onChange={(e) => handleChange(e, field.onChange)}
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem className="flex items-center gap-3 w-full">
+              <FormLabel className="text-base-semibod text-light-2">
+                Name
+              </FormLabel>
+              <FormControl className="flex-1 text-base-semibold text-gray-200">
+                <Input
+                  placeholder="Your name"
+                  type="text"
+                  className="account-form_input no-focus"
+                  {...field}
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="username"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Username</FormLabel>
-              <FormControl>
-                <Input placeholder="" {...field} />
+            <FormItem className="flex items-center gap-3 w-full">
+              <FormLabel className="text-base-semibod text-light-2">
+                UserName
+              </FormLabel>
+              <FormControl className="flex-1 text-base-semibold text-gray-200">
+                <Input
+                  placeholder="Your username"
+                  type="text"
+                  className="account-form_input no-focus"
+                  {...field}
+                />
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
-              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="bio"
+          render={({ field }) => (
+            <FormItem className="flex items-center gap-3 w-full">
+              <FormLabel className="text-base-semibod text-light-2">
+                Bio
+              </FormLabel>
+              <FormControl className="flex-1 text-base-semibold text-gray-200">
+                <Textarea
+                  placeholder="Your bio"
+                  rows={10}
+                  className="account-form_input no-focus"
+                  {...field}
+                />
+              </FormControl>
             </FormItem>
           )}
         />
