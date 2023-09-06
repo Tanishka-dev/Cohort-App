@@ -1,5 +1,6 @@
 "use client";
 import * as z from "zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   Form,
@@ -32,13 +33,14 @@ interface Props {
 }
 
 const AccountProfile = ({ user, btnType }: Props) => {
+  const [files, setfiles] = useState<File[]>([]);
   const form = useForm({
     resolver: zodResolver(UserVaildations),
     defaultValues: {
-      profile_photo: "",
-      name: "",
-      username: "",
-      bio: "",
+      profile_photo: user?.image || "",
+      name: user?.name || "",
+      username: user?.username || "",
+      bio: user?.bio || "",
     },
   });
 
@@ -46,10 +48,28 @@ const AccountProfile = ({ user, btnType }: Props) => {
     console.log(values);
   }
   const handleChange = (
-    e: ChangeEvent,
+    e: ChangeEvent<HTMLInputElement>,
     fieldChange: (value: string) => void
   ) => {
     e.preventDefault();
+
+    const fileReader = new FileReader();
+
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+
+      setfiles(Array.from(e.target.files));
+
+      if (!file.type.includes("image")) return;
+
+      fileReader.onload = async (event) => {
+        const imageDataUrl = event?.target?.result?.toString() || "";
+
+        fieldChange(imageDataUrl);
+      };
+
+      fileReader.readAsDataURL(file);
+    }
   };
 
   return (
@@ -77,8 +97,8 @@ const AccountProfile = ({ user, btnType }: Props) => {
                   <Image
                     alt="profile photo"
                     src="/assets/profile.svg"
-                    width={20}
-                    height={20}
+                    width={22}
+                    height={22}
                     className="object-contain"
                   />
                 )}
@@ -99,11 +119,11 @@ const AccountProfile = ({ user, btnType }: Props) => {
           control={form.control}
           name="name"
           render={({ field }) => (
-            <FormItem className="flex items-center gap-3 w-full">
+            <FormItem className="flex flex-col gap-3 w-full">
               <FormLabel className="text-base-semibod text-light-2">
                 Name
               </FormLabel>
-              <FormControl className="flex-1 text-base-semibold text-gray-200">
+              <FormControl>
                 <Input
                   placeholder="Your name"
                   type="text"
@@ -118,11 +138,11 @@ const AccountProfile = ({ user, btnType }: Props) => {
           control={form.control}
           name="username"
           render={({ field }) => (
-            <FormItem className="flex items-center gap-3 w-full">
+            <FormItem className="flex flex-col gap-3 w-full">
               <FormLabel className="text-base-semibod text-light-2">
                 UserName
               </FormLabel>
-              <FormControl className="flex-1 text-base-semibold text-gray-200">
+              <FormControl>
                 <Input
                   placeholder="Your username"
                   type="text"
@@ -137,11 +157,11 @@ const AccountProfile = ({ user, btnType }: Props) => {
           control={form.control}
           name="bio"
           render={({ field }) => (
-            <FormItem className="flex items-center gap-3 w-full">
+            <FormItem className="flex flex-col gap-3 w-full">
               <FormLabel className="text-base-semibod text-light-2">
                 Bio
               </FormLabel>
-              <FormControl className="flex-1 text-base-semibold text-gray-200">
+              <FormControl>
                 <Textarea
                   placeholder="Your bio"
                   rows={10}
