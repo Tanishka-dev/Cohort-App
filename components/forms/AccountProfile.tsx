@@ -52,16 +52,20 @@ const AccountProfile = ({ user, btnType }: Props) => {
     fieldChange: (value: string) => void
   ) => {
     e.preventDefault();
-
+    //set profile photo if user wants to change
     const fileReader = new FileReader();
 
     if (e.target.files && e.target.files.length > 0) {
+      //pick first file
       const file = e.target.files[0];
 
+      //set in useState
       setfiles(Array.from(e.target.files));
 
+      //return if file type not image
       if (!file.type.includes("image")) return;
 
+      //set url of the image
       fileReader.onload = async (event) => {
         const imageDataUrl = event?.target?.result?.toString() || "";
 
